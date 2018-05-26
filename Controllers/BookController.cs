@@ -43,6 +43,11 @@ namespace SakurAni_Lib.Controllers {
         [HttpGet]
         public IEnumerable<Book> Get()
         {
+            using(var context = new SakurAniLibContext())
+            {
+                
+            }
+
             return bookItems;
         }
 

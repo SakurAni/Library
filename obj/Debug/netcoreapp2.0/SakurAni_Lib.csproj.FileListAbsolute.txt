@@ -9,3 +9,9 @@ C:\Users\anita\Google Drive\Arbeit\Selbstständigkeit\www.sakurani.de\SakurAni_L
 C:\Users\anita\Google Drive\Arbeit\Selbstständigkeit\www.sakurani.de\SakurAni_Lib\SakurAni_Lib\obj\Debug\netcoreapp2.0\SakurAni_Lib.AssemblyInfo.cs
 C:\Users\anita\Google Drive\Arbeit\Selbstständigkeit\www.sakurani.de\SakurAni_Lib\SakurAni_Lib\obj\Debug\netcoreapp2.0\SakurAni_Lib.dll
 C:\Users\anita\Google Drive\Arbeit\Selbstständigkeit\www.sakurani.de\SakurAni_Lib\SakurAni_Lib\obj\Debug\netcoreapp2.0\SakurAni_Lib.pdb
+C:\dev\git\sakuraniLib\obj\Debug\netcoreapp2.0\SakurAni_Lib.csprojAssemblyReference.cache
+C:\dev\git\sakuraniLib\obj\Debug\netcoreapp2.0\SakurAni_Lib.csproj.CoreCompileInputs.cache
+C:\dev\git\sakuraniLib\obj\Debug\netcoreapp2.0\SakurAni_Lib.AssemblyInfoInputs.cache
+C:\dev\git\sakuraniLib\obj\Debug\netcoreapp2.0\SakurAni_Lib.AssemblyInfo.cs
+C:\dev\git\sakuraniLib\obj\Debug\netcoreapp2.0\SakurAni_Lib.dll
+C:\dev\git\sakuraniLib\obj\Debug\netcoreapp2.0\SakurAni_Lib.pdb
