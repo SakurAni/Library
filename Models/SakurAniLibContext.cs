@@ -1,21 +1,20 @@
-using MySql.Data.MySqlClient;
-using System;
-using System.Collections.Generic;
+// using System;
+// using System.Linq;
+// using Microsoft.EntityFrameworkCore;
+// using Microsoft.Extensions.Configuration;
 
-namespace SakurAni_Lib.Models 
-{
-    public class SakurAniLibContext
-    {
-        public string ConnectionString { get; set; }
+// namespace SakurAni_Lib.Models
+// {
+//     public class SakurAniLibContext : DbContext 
+//     {
+//         public SakurAniLibContext(DbContextOptions<SakurAniLibContext> options) :base(options)
+//         { }
 
-        public SakurAniLibContext(string connectionString) 
-        {
-            this.ConnectionString = connectionString;
-        }
+//         public DbSet<Book> Books {get; set;}
 
-        private MySqlConnection GetConnection()
-        {
-            return new MySqlConnection(ConnectionString);
-        }
-    }
-}
+//         protected override void OnModelCreating(ModelBuilder builder)
+//         {
+//             builder.Entity<Isbn>().HasKey(m => m.)
+//         }
+//     }
+// }
