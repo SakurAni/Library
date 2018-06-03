@@ -5,7 +5,7 @@ namespace SakurAni_Lib.Models {
         public int Isbn {get; set;}
         public string Title {get; set;}
         public double Price {get; set;}
-        public IEnumerable<string> Author {get; set;}
+        public IEnumerable<Author> Author {get; set;}
         public string Picture {get; set;}
         public int SeriesNumber {get; set;}
         public string Currency {get; set;}

@@ -15,3 +15,14 @@ C:\dev\git\sakuraniLib\obj\Debug\netcoreapp2.0\SakurAni_Lib.AssemblyInfoInputs.c
 C:\dev\git\sakuraniLib\obj\Debug\netcoreapp2.0\SakurAni_Lib.AssemblyInfo.cs
 C:\dev\git\sakuraniLib\obj\Debug\netcoreapp2.0\SakurAni_Lib.dll
 C:\dev\git\sakuraniLib\obj\Debug\netcoreapp2.0\SakurAni_Lib.pdb
+F:\Dev\Library\backend\bin\Debug\netcoreapp2.0\SakurAni_Lib.deps.json
+F:\Dev\Library\backend\bin\Debug\netcoreapp2.0\SakurAni_Lib.runtimeconfig.json
+F:\Dev\Library\backend\bin\Debug\netcoreapp2.0\SakurAni_Lib.runtimeconfig.dev.json
+F:\Dev\Library\backend\bin\Debug\netcoreapp2.0\SakurAni_Lib.dll
+F:\Dev\Library\backend\bin\Debug\netcoreapp2.0\SakurAni_Lib.pdb
+F:\Dev\Library\backend\obj\Debug\netcoreapp2.0\SakurAni_Lib.csprojAssemblyReference.cache
+F:\Dev\Library\backend\obj\Debug\netcoreapp2.0\SakurAni_Lib.csproj.CoreCompileInputs.cache
+F:\Dev\Library\backend\obj\Debug\netcoreapp2.0\SakurAni_Lib.AssemblyInfoInputs.cache
+F:\Dev\Library\backend\obj\Debug\netcoreapp2.0\SakurAni_Lib.AssemblyInfo.cs
+F:\Dev\Library\backend\obj\Debug\netcoreapp2.0\SakurAni_Lib.dll
+F:\Dev\Library\backend\obj\Debug\netcoreapp2.0\SakurAni_Lib.pdb
