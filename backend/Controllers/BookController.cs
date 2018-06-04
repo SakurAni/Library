@@ -1,11 +1,14 @@
 using System;
-using System.IO;
-using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using SakurAni_Lib.Models;
-using SakurAni_Lib.Models.Database;
+using System.Threading.Tasks;
+
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+
 using SakurAni_Lib.Helper;
+using SakurAni_Lib.Models;
 
 namespace SakurAni_Lib.Controllers { 
     [Route("api/[controller]")]
@@ -17,73 +20,134 @@ namespace SakurAni_Lib.Controllers {
             this.ConnectionString = Utils.GetConnectionString();
         }
 
-        // GET api/book
+        // [GET] api/book
         [HttpGet]
-        public IEnumerable<Book> Get()
+        public async Task<IEnumerable<Book>> Get()
         {
             using(var db = new SakurAniLibContext(this.ConnectionString))
             {
-                var dbBookList = db.Book.ToList();
-                var books = new List<Book>();
+                return await db.Book.ToListAsync();
+            }
+        }
 
-                foreach(var b in dbBookList)
+        // [GET] api/book/{isbn}
+        [Route("{isbn}")]
+        public async Task<IActionResult> GetBook(string isbn) 
+        {
+            using(var db = new SakurAniLibContext(this.ConnectionString))
+            {
+                var book = await db.Book.FirstOrDefaultAsync(b => b.Isbn == isbn);
+
+                if(book == null)
                 {
-                    // Query authors
-                    var bookAuthors = (from ba in db.Book_Author
-                                        where ba.Isbn == b.Isbn
-                                        select ba).ToList();
-
-                    var book = new Book {
-                        Isbn = b.Isbn,
-                        Title = b.Title,
-                        Price = b.Price,
-                        Picture = b.Picture,
-                        SeriesNumber = b.SeriesNumber,
-                        Currency = b.Currency,
-                        Type = b.Type
-                    };
-
-                    var authorList = new List<Author>();
-
-                    foreach(var ba in bookAuthors)
-                    {
-                        var author = (from a in db.Author
-                                      where a.Id == ba.AuthorId
-                                      select a).FirstOrDefault();
-
-                        authorList.Add(new Author{
-                            Id = author.Id,
-                            Name = author.Name,
-                            IsArtist = author.IsArtist
-                        });
-                    }
-
-                    book.Author = authorList;
-
-                    books.Add(book);
+                    return NotFound();
                 }
 
-                return books;
+                return Ok(book);
             }
         }
 
-        [Route("{isbn}")]
-        public Book GetBook(int isbn) 
+        // [GET] api/book/author/{id}
+        [Route("/author/{id}")]
+        public async Task<IActionResult> GetBooksByAuthor(string id)
         {
+            using (var db = new SakurAniLibContext(this.ConnectionString))
+            {
+                var booksByAuthor = new List<Book>();
+
+                // Query BookAuthor Info from Intersection Table
+                var bookAuthorList =  await (from b in db.Book_Author
+                                            where b.AuthorId == id
+                                            select b).ToListAsync();
+
+                if(bookAuthorList.Count == 0)
+                {
+                    return NoContent();
+                }
+
+                // Get detailed Book info for each isbn
+                foreach (var bookAuthor in bookAuthorList)
+                {
+                    var book = await db.Book.FirstOrDefaultAsync(b => b.Isbn == bookAuthor.Isbn);
+
+                    booksByAuthor.Add(book);
+                }
+
+                return Ok(booksByAuthor);
+            }
+        }
+
+        // [POST] api/book
+        [HttpPost]
+        public async Task<IActionResult> Create(Book book)
+        {
+            if (!ModelState.IsValid)
+            {
+
+            }
+
             using(var db = new SakurAniLibContext(this.ConnectionString))
             {
-                return null;
-                // return (from b in db.Book
-                //         where b.Isbn == isbn
-                //         select b).FirstOrDefault();
+                await db.Book.AddAsync(book);
+                await db.SaveChangesAsync();
+
+                return Created($"/api/book/{book.Isbn}", book);
             }
         }
 
-        // TODO: RFP
-        [Route("connectionString")]
-        public string GetConnectionString()
+        // [PUT] api/book
+        [HttpPut]
+        public async Task<IActionResult> Update(Book book)
         {
-            return this.ConnectionString;
+            if (!ModelState.IsValid)
+            {
+                
+            }
+
+            using(var db = new SakurAniLibContext(this.ConnectionString))
+            {
+                var updatedBook = await db.Book.FirstOrDefaultAsync(b => b.Isbn == book.Isbn);
+
+                if (updatedBook == null) 
+                {
+                    return NotFound();
+                }
+
+                // update values
+                updatedBook.Isbn = book.Isbn;
+                updatedBook.Title = book.Title;
+                updatedBook.Price = book.Price;
+                updatedBook.Picture = book.Picture;
+                updatedBook.SeriesNumber = book.SeriesNumber;
+                updatedBook.Currency = book.Currency;
+                updatedBook.Type = book.Type;
+
+                // Save
+                await db.SaveChangesAsync();
+
+                return Ok(book);
+            }
+        }
+
+        // [DELETE] api/book/{isbn}
+        [HttpDelete]
+        [Route("{isbn}")]
+        public async Task<IActionResult> Delete(string isbn)
+        {
+            using (var db = new SakurAniLibContext(this.ConnectionString))
+            {
+                var book = await db.Book.FirstOrDefaultAsync(b => b.Isbn == isbn);
+
+                if (book == null) 
+                {
+                    return NotFound();
+                }
+
+                db.Book.Remove(book);
+                await db.SaveChangesAsync();
+
+                return new NoContentResult();
+            }
         }
     }
 }

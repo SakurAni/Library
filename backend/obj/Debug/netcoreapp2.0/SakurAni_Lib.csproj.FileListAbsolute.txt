@@ -26,3 +26,14 @@ F:\Dev\Library\backend\obj\Debug\netcoreapp2.0\SakurAni_Lib.AssemblyInfoInputs.c
 F:\Dev\Library\backend\obj\Debug\netcoreapp2.0\SakurAni_Lib.AssemblyInfo.cs
 F:\Dev\Library\backend\obj\Debug\netcoreapp2.0\SakurAni_Lib.dll
 F:\Dev\Library\backend\obj\Debug\netcoreapp2.0\SakurAni_Lib.pdb
+C:\Users\seifert\Documents\Library\backend\bin\Debug\netcoreapp2.0\SakurAni_Lib.deps.json
+C:\Users\seifert\Documents\Library\backend\bin\Debug\netcoreapp2.0\SakurAni_Lib.runtimeconfig.json
+C:\Users\seifert\Documents\Library\backend\bin\Debug\netcoreapp2.0\SakurAni_Lib.runtimeconfig.dev.json
+C:\Users\seifert\Documents\Library\backend\bin\Debug\netcoreapp2.0\SakurAni_Lib.dll
+C:\Users\seifert\Documents\Library\backend\bin\Debug\netcoreapp2.0\SakurAni_Lib.pdb
+C:\Users\seifert\Documents\Library\backend\obj\Debug\netcoreapp2.0\SakurAni_Lib.csprojAssemblyReference.cache
+C:\Users\seifert\Documents\Library\backend\obj\Debug\netcoreapp2.0\SakurAni_Lib.csproj.CoreCompileInputs.cache
+C:\Users\seifert\Documents\Library\backend\obj\Debug\netcoreapp2.0\SakurAni_Lib.AssemblyInfoInputs.cache
+C:\Users\seifert\Documents\Library\backend\obj\Debug\netcoreapp2.0\SakurAni_Lib.AssemblyInfo.cs
+C:\Users\seifert\Documents\Library\backend\obj\Debug\netcoreapp2.0\SakurAni_Lib.dll
+C:\Users\seifert\Documents\Library\backend\obj\Debug\netcoreapp2.0\SakurAni_Lib.pdb

@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using SakurAni_Lib.Models.Database;
 
 namespace SakurAni_Lib.Models
 {
@@ -14,9 +13,9 @@ namespace SakurAni_Lib.Models
 
         private string ConnectionString { get; set; }
 
-        public DbSet<DbBook> Book { get; set; }
-        public DbSet<DbAuthor> Author { get; set; }
-        public DbSet<DbBookAuthor> Book_Author { get; set; }
+        public DbSet<Book> Book { get; set; }
+        public DbSet<Author> Author { get; set; }
+        public DbSet<BookAuthor> Book_Author { get; set; }
         // public DbSet<Genre> Genre { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionBuilder)
