@@ -1,45 +1,102 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+
+using SakurAni_Lib.Helper;
+using SakurAni_Lib.Models;
+
 namespace SakurAni_Lib.Controllers {
-    using System;
-    using System.IO;
-    using Microsoft.AspNetCore.Mvc;
-    using System.Collections.Generic;
-    using System.Linq;
-    using SakurAni_Lib.Models;
-    
     [Route("api/[controller]")]
     public class GenreController : Controller {
-
-        private readonly IEnumerable<Genre> genreItems;
+        private string ConnectionString { get; set; }
 
         // Konstruktor
-        public GenreController() {
-            genreItems = new List<Genre> {
-                new Genre {
-                    Id = "1",
-                    Name = "Shounen Ai"
-                },                
-                new Genre {
-                    Id = "2",
-                    Name = "Shoujo Ai"
-                }
-            }; 
+        public GenreController()
+        {
+            this.ConnectionString = Utils.GetConnectionString();
         }
 
-        // GET api/genre
+        // [GET] api/genre
         [HttpGet]
-        public IEnumerable<Genre> Get()
+        public async Task<IEnumerable<Genre>> Get()
         {
-            return genreItems;
+            using(var db = new SakurAniLibContext(this.ConnectionString))
+            {
+                return await db.Genre.ToListAsync();
+            }
         }
 
-        [Route("{id}")]
-        public Genre GetGenre(string id) 
+        // [POST] api/genre
+        [HttpPost]
+        public async Task<IActionResult> Create(Genre genre)
         {
-            var genre = (from g in genreItems
-                    where g.Id.Equals(id)
-                    select g).FirstOrDefault();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
 
-            return genre;
+            using(var db = new SakurAniLibContext(this.ConnectionString))
+            {
+                await db.Genre.AddAsync(genre);
+                await db.SaveChangesAsync();
+
+                return Created($"/api/genre/{genre.Id}", genre);
+            }
+        }
+
+        // [PUT] api/genre
+        [HttpPut]
+        public async Task<IActionResult> Update(Genre genre)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            using(var db = new SakurAniLibContext(this.ConnectionString))
+            {
+                var updatedGenre = await db.Genre.FirstOrDefaultAsync(g => g.Id == genre.Id);
+
+                if (updatedGenre == null) 
+                {
+                    return NotFound();
+                }
+
+                // update values
+                updatedGenre.Id = genre.Id;
+                updatedGenre.Name = genre.Name;
+
+                // Save
+                await db.SaveChangesAsync();
+
+                return Ok(genre);
+            }
+        }
+
+        // [DELETE] api/genre/{id}
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            using (var db = new SakurAniLibContext(this.ConnectionString))
+            {
+                var genre = await db.Genre.FirstOrDefaultAsync(g => g.Id == id);
+
+                if (genre == null) 
+                {
+                    return NotFound();
+                }
+
+                db.Genre.Remove(genre);
+                await db.SaveChangesAsync();
+
+                return new NoContentResult();
+            }
         }
     }
 }

@@ -14,7 +14,8 @@ namespace SakurAni_Lib.Controllers {
     [Route("api/[controller]")]
     public class BookController : Controller {
         private string ConnectionString { get; set; }
-
+        
+        // Konstruktor
         public BookController()
         {
             this.ConnectionString = Utils.GetConnectionString();
@@ -77,13 +78,43 @@ namespace SakurAni_Lib.Controllers {
             }
         }
 
+        // [GET] api/book/genre/{id}
+        [Route("/genre/{id}")]
+        public async Task<IActionResult> GetBooksByGenre(string id)
+        {
+            using (var db = new SakurAniLibContext(this.ConnectionString))
+            {
+                var booksByGenre = new List<Book>();
+
+                // Query BookGenre Info from Intersection Table
+                var bookGenreList =  await (from b in db.Book_Genre
+                                            where b.GenreId == id
+                                            select b).ToListAsync();
+
+                if(bookGenreList.Count == 0)
+                {
+                    return NoContent();
+                }
+
+                // Get detailed Book info for each isbn
+                foreach (var bookGenre in bookGenreList)
+                {
+                    var book = await db.Book.FirstOrDefaultAsync(b => b.Isbn == bookGenre.Isbn);
+
+                    booksByGenre.Add(book);
+                }
+
+                return Ok(booksByGenre);
+            }
+        }
+
         // [POST] api/book
         [HttpPost]
         public async Task<IActionResult> Create(Book book)
         {
             if (!ModelState.IsValid)
             {
-
+                return BadRequest();
             }
 
             using(var db = new SakurAniLibContext(this.ConnectionString))
@@ -101,7 +132,7 @@ namespace SakurAni_Lib.Controllers {
         {
             if (!ModelState.IsValid)
             {
-                
+                return BadRequest();
             }
 
             using(var db = new SakurAniLibContext(this.ConnectionString))
