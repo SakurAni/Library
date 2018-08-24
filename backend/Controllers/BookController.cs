@@ -49,7 +49,7 @@ namespace SakurAni_Lib.Controllers {
         }
 
         // [GET] api/book/author/{id}
-        [Route("/author/{id}")]
+        [Route("author/{id}")]
         public async Task<IActionResult> GetBooksByAuthor(string id)
         {
             using (var db = new SakurAniLibContext(this.ConnectionString))
@@ -79,7 +79,7 @@ namespace SakurAni_Lib.Controllers {
         }
 
         // [GET] api/book/genre/{id}
-        [Route("/genre/{id}")]
+        [Route("genre/{id}")]
         public async Task<IActionResult> GetBooksByGenre(string id)
         {
             using (var db = new SakurAniLibContext(this.ConnectionString))
@@ -107,6 +107,36 @@ namespace SakurAni_Lib.Controllers {
                 return Ok(booksByGenre);
             }
         }
+
+        // [GET] api/book/series/{id}
+        [Route("series/{id}")]
+        public async Task<IActionResult> GetBooksBySeries(string id)
+        {
+            using (var db = new SakurAniLibContext(this.ConnectionString))
+            {
+                var booksBySeries = new List<Book>();
+
+                // Query BookSeries Info from Intersection Table
+                var bookSeriesList = await (from b in db.Series_Book
+                                            where b.SeriesId == id
+                                            select b).ToListAsync();
+
+                if (bookSeriesList.Count == 0) 
+                {
+                    return NoContent();
+                }
+
+                // Get detailed Book info for each isbn
+                foreach(var bookSeries in bookSeriesList)
+                {
+                    var book = await db.Book.FirstOrDefaultAsync(b => b.Isbn == bookSeries.Isbn);
+
+                    booksBySeries.Add(book);
+                }
+
+                return Ok(booksBySeries);
+            }
+        } 
 
         // [POST] api/book
         [HttpPost]
