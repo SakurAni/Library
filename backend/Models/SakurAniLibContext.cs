@@ -19,6 +19,8 @@ namespace SakurAni_Lib.Models
         public DbSet<Series> Series { get; set; }
         public DbSet<Book_Genre> Book_Genre { get; set; }
         public DbSet<Book_Author> Book_Author { get; set; }
+        public DbSet<Series_Book> Series_Book { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionBuilder)
           => optionBuilder.UseMySql(ConnectionString);
